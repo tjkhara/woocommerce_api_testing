@@ -1,3 +1,4 @@
+README.md
 setup.py
 ssqaapitest/__init__.py
 ssqaapitest.egg-info/PKG-INFO
@@ -5,4 +6,7 @@ ssqaapitest.egg-info/SOURCES.txt
 ssqaapitest.egg-info/dependency_links.txt
 ssqaapitest.egg-info/top_level.txt
 ssqaapitest/src/__init__.py
+ssqaapitest/src/utilities/__init__.py
+ssqaapitest/src/utilities/generic_utilities.py
 ssqaapitest/tests/__init__.py
+ssqaapitest/tests/test_healthcheck.py
