@@ -38,9 +38,25 @@ class RequestsUtility(object):
         self.response_json = self.response.json()
         self.assert_status_code()
 
-        logger.debug(f"API response: {self.response_json}")
+        logger.debug(f"POST API response: {self.response_json}")
 
         return self.response_json
 
-    def get(self):
-        pass
+    def get(self, endpoint, payload=None, headers=None, expected_status_code=200):
+        if not headers:
+            headers = {"Content-Type": "application/json"}
+
+        self.url = self.base_url + endpoint
+
+        self.response = requests.get(url=self.url, data=payload, headers=headers, auth=self.auth)
+        self.status_code = self.response.status_code
+        self.expected_status_code = expected_status_code
+        self.response_json = self.response.json()
+        self.assert_status_code()
+
+        logger.debug(f"GET API response: {self.response_json}")
+
+        return self.response_json
+
+
+
