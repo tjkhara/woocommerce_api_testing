@@ -1,6 +1,7 @@
 import pytest
 import logging as logger
 from ssqaapitest.src.utilities.generic_utilities import generate_random_email_and_password
+from ssqaapitest.src.utilities.helpers.customers_helper import CustomerHelper
 
 @pytest.mark.tcid29
 def test_create_customer_only_email_password():
@@ -13,11 +14,11 @@ def test_create_customer_only_email_password():
     email = rand_info.get("email")
     password = rand_info.get("password")
 
-    # create payload
-    payload = {"email":email, "password":password}
-
     # make the call
+    cust_obj = CustomerHelper()
+    cust_api_info = cust_obj.create_customer(email=email, password=password)
 
+    return True
 
     # verify status code of the call
 
