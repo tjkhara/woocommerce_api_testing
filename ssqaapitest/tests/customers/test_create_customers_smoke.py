@@ -8,7 +8,7 @@ from ssqaapitest.src.dao.customers_dao import CustomersDAO
 from ssqaapitest.src.utilities.requests_utility import RequestsUtility
 import random
 
-
+@pytest.mark.customers
 @pytest.mark.tcid29
 def test_create_customer_only_email_password():
     logger.info("TEST: Create new customer with email and password only.")
@@ -39,6 +39,7 @@ def test_create_customer_only_email_password():
                                                       f" id in database {cust_info['ID']}" \
                                                       f" do not match."
 
+@pytest.mark.customers
 @pytest.mark.tcid47
 def test_create_customer_fail_for_existing_email():
 

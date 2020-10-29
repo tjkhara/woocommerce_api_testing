@@ -2,6 +2,7 @@ import pytest
 from ssqaapitest.src.utilities.requests_utility import RequestsUtility
 import logging as logger
 
+@pytest.mark.customers
 @pytest.mark.tcid30
 def test_get_all_customers():
     request_helper = RequestsUtility()
