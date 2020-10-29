@@ -1,4 +1,4 @@
-# woocommerce_api_testing
+# Woo Commerce API testing framework for python using pytest
 
 This is the repo where I am building the project myself.
 
