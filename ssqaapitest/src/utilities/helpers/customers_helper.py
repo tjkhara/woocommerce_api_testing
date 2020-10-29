@@ -1,5 +1,6 @@
-from ssqaapitest.src.utilities.generic_utilities import generate_random_email_and_password
+from ssqaapitest.src.utilities.generic_utility import generate_random_email_and_password
 from ssqaapitest.src.utilities.requests_utility import RequestsUtility
+import logging as logger
 import json
 
 class CustomerHelper(object):
@@ -22,5 +23,7 @@ class CustomerHelper(object):
 
 
         create_user_json = self.requests_utility.post('customers', payload=json.dumps(payload), expected_status_code=201)
+
+        logger.debug(f"API response: {create_user_json}")
 
         return create_user_json

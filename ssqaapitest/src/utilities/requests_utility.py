@@ -1,9 +1,10 @@
 
 from ssqaapitest.src.configs.hosts_config import API_HOSTS
-from ssqaapitest.src.utilities.credentials_helper import CredentialsUtility
+from ssqaapitest.src.utilities.credentials_utility import CredentialsUtility
 import requests
 import os
 from requests_oauthlib import OAuth1
+import logging as logger
 
 class RequestsUtility(object):
 
@@ -13,18 +14,33 @@ class RequestsUtility(object):
         self.base_url = API_HOSTS[self.env]
         self.auth = OAuth1(api_keys.get('wc_key'), api_keys.get('wc_secret'))
         self.status_code = None
+        self.expected_status_code = None
+        self.url = None
+        self.response = None
+        self.response_json = None
+
+    def assert_status_code(self):
+        assert self.status_code == self.expected_status_code, f"Bad status code." \
+                                                              f"Expected {self.expected_status_code}" \
+                                                              f"Actual {self.status_code}" \
+                                                              f"url: {self.url}" \
+                                                              f"Response json: {self.response_json}"
 
     def post(self, endpoint, payload=None, headers=None, expected_status_code=200):
         if not headers:
             headers = {"Content-Type": "application/json"}
 
-        url = self.base_url + endpoint
+        self.url = self.base_url + endpoint
 
-        response = requests.post(url=url, data=payload, headers=headers, auth=self.auth)
-        self.status_code = response.status_code
-        assert self.status_code == int(expected_status_code), f'Expected status code {expected_status_code} ' \
-                                                              f'but actual {self.status_code}'
-        return response.json()
+        self.response = requests.post(url=self.url, data=payload, headers=headers, auth=self.auth)
+        self.status_code = self.response.status_code
+        self.expected_status_code = expected_status_code
+        self.response_json = self.response.json()
+        self.assert_status_code()
+
+        logger.debug(f"API response: {self.response_json}")
+
+        return self.response_json
 
     def get(self):
         pass

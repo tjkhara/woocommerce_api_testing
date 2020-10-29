@@ -1,7 +1,8 @@
 import pytest
 import logging as logger
-from ssqaapitest.src.utilities.generic_utilities import generate_random_email_and_password
+from ssqaapitest.src.utilities.generic_utility import generate_random_email_and_password
 from ssqaapitest.src.utilities.helpers.customers_helper import CustomerHelper
+from ssqaapitest.src.dao.customers_dao import CustomersDAO
 
 @pytest.mark.tcid29
 def test_create_customer_only_email_password():
@@ -18,10 +19,17 @@ def test_create_customer_only_email_password():
     cust_obj = CustomerHelper()
     cust_api_info = cust_obj.create_customer(email=email, password=password)
 
-    return True
-
     # verify status code of the call
 
-    # verify email in the response
+
+    # verify email and first name in the response
+    assert cust_api_info['email'] == email, f"Create customer api returned wrong email. Email {email}"
+    assert cust_api_info['first_name'] == '', f"Create customer API returned a value for the first name" \
+                                              f"but it should be empty."
 
     # verify customer is created in the database
+    cust_dao = CustomersDAO()
+
+    cust_info = cust_dao.get_customer_by_email(email)
+    import pdb;
+    pdb.set_trace()
