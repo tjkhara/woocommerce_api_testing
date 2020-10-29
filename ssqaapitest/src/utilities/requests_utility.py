@@ -32,11 +32,12 @@ class RequestsUtility(object):
 
         self.url = self.base_url + endpoint
 
+        # This is the actual request
         self.response = requests.post(url=self.url, data=payload, headers=headers, auth=self.auth)
         self.status_code = self.response.status_code
         self.expected_status_code = expected_status_code
         self.response_json = self.response.json()
-        self.assert_status_code()
+        self.assert_status_code() # This checks the status code is as expected
 
         logger.debug(f"POST API response: {self.response_json}")
 
