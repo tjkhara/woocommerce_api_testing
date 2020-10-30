@@ -51,6 +51,7 @@ class RequestsUtility(object):
 
         self.response = requests.get(url=self.url, data=payload, headers=headers, auth=self.auth)
         self.status_code = self.response.status_code
+        # We check the expected status code here
         self.expected_status_code = expected_status_code
         self.response_json = self.response.json()
         self.assert_status_code()
